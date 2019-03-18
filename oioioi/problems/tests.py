@@ -666,7 +666,7 @@ class TestProblemSite(TestCase, TestStreamingMixin):
         url_external_attmt = reverse('problem_site_external_attachment',
                 kwargs={'site_key': '123', 'attachment_id': 1})
         response = self.client.get(url_external_attmt)
-        self.assertStreamingEqual(response, 'content-of-probatt')
+        self.assertStreamingEqual(response, b'content-of-probatt')
 
     def test_form_accessibility(self):
         self.assertTrue(self.client.login(username='test_admin'))
@@ -817,22 +817,21 @@ class TestProblemsetUploading(TransactionTestCase, TestStreamingMixin):
         self.assertContains(response, "<td>tst</td>")
         # and we are problem's author and problem_site exists
         problem = Problem.objects.get()
-        url = reverse('problem_site', args=[problem.problemsite.url_key])
+        url = reverse('problem_site', args=[problem.problemsite.url_key]) + '?key=settings'
         response = self.client.post(url, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Edit problem')
         self.assertContains(response, 'Reupload problem')
-        self.assertContains(response, 'Show model solutions')
+        self.assertContains(response, 'Model solutions')
         # we can see model solutions of main_problem_instance
         self.check_models_for_simple_package(problem.main_problem_instance)
 
-        # reuploading problem in problemset is not aviable from problemset
+        # reuploading problem in problemset is not available from problemset
         url = reverse('problemset_add_or_update')
         response = self.client.get(url, {'key': "problemset_source",
                                          'problem': problem.id}, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Option not available")
-        self.assertContains(response, "Update problem")
         self.assertNotContains(response, "Select")
 
     def test_add_problem_to_contest(self):
