@@ -63,7 +63,6 @@ LANGUAGE_COOKIE_NAME = 'lang'
 USE_I18N = True
 LOCALE_PATHS = [
     os.path.join(os.path.dirname(oioioi.__file__), 'locale'),
-    os.path.join(os.path.dirname(oioioi.__file__), 'locale-overrides'),
 ]
 
 # If you set this to False, Django will not format dates, numbers and
@@ -132,7 +131,6 @@ TEMPLATES = [
                 'oioioi.base.processors.side_menus',
                 'oioioi.base.processors.site_name',
                 'oioioi.base.processors.mathjax_location',
-                'oioioi.jotform.processors.jotform',
                 'oioioi.contests.processors.register_current_contest',
                 'oioioi.contests.processors.register_recent_contests',
                 'oioioi.contestexcl.processors.register_contest_exclusive',
@@ -141,7 +139,6 @@ TEMPLATES = [
                 'oioioi.problems.processors.problems_need_rejudge_processor',
                 'oioioi.problems.processors.can_add_to_problemset_processor',
                 'oioioi.questions.processors.navbar_tip_processor',
-                'oioioi.analytics.processors.analytics_processor',
                 'oioioi.status.processors.status_processor',
                 'oioioi.programs.processors.drag_and_drop_processor',
             ],
@@ -169,7 +166,6 @@ MIDDLEWARE = (
     'oioioi.base.middleware.CheckLoginMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'oioioi.maintenancemode.middleware.MaintenanceModeMiddleware',
 )
 
 COMMON_MEDIA_PREFIX = 'common/'
@@ -201,15 +197,12 @@ INSTALLED_APPS = (
     'oioioi.questions',
     'oioioi.rankings',
     'oioioi.sioworkers',
-    'oioioi.jotform',
-    'oioioi.analytics',
     'oioioi.celery',
     'oioioi.status',
     'oioioi.su',
     'oioioi.clock',
     'oioioi.dashboard',
     'oioioi.base',
-    'oioioi.maintenancemode',
     'oioioi.evalmgr',
     'oioioi.workers',
     'oioioi.quizzes',
@@ -269,7 +262,6 @@ QUESTIONS_ON_PAGE = 30
 SUBMISSIONS_ON_PAGE = 100
 PARTICIPANTS_ON_PAGE = 100
 TESTS_ON_PAGE = 100
-PRIZES_ON_PAGE = 100
 
 NUM_PANEL_SUBMISSIONS = 7
 
@@ -445,12 +437,6 @@ UNPACKMGR_CONCURRENCY = 1
 
 SIOWORKERSD_URL = 'http://localhost:7889/'
 
-# ID of JotForm account for "Send Feedback" link.
-JOTFORM_ID = None
-
-# Google Analytics
-GOOGLE_ANALYTICS_TRACKING_ID = None
-
 PRINTING_FONT_SIZE = 8  # in pt
 PRINTING_MAX_FILE_SIZE = 1024 * 100  # in kB
 PRINTING_MAX_FILE_PAGES = 10
@@ -469,20 +455,6 @@ MAIL_ADMINS_ON_GRADING_ERROR = True
 # Message shortcut length in notification shown when an admin is editing
 # a reply in a thread in which a new message was posted in the meantime.
 MEANTIME_ALERT_MESSAGE_SHORTCUT_LENGTH = 50
-
-# Zeus configuration
-ZEUS_INSTANCES = {
-}
-
-# URL prefix (protocol, hostname and port)
-# hit by the Zeus callback after a submission is judged
-ZEUS_PUSH_GRADE_CALLBACK_URL = 'https://sio2.dasie.mimuw.edu.pl'
-
-# Delay between consecutive http requests for results.
-ZEUS_RESULTS_FETCH_DELAY = 3  # seconds
-ZEUS_CONNECTION_TIMEOUT = 10  # seconds
-ZEUS_SEND_RETRIES = 3
-ZEUS_RETRY_SLEEP = 1  # second
 
 # Cache
 CACHES = {
@@ -519,14 +491,6 @@ NOTIFICATIONS_RABBITMQ_EXTRA_PARAMS = {}
 # Port that the Notifications Server listens on
 NOTIFICATIONS_SERVER_PORT = 7887
 
-# Balloons
-BALLOON_ACCESS_COOKIE_EXPIRES_DAYS = 7
-
-# Cache timeout (in seconds) for livedata stream (used in some onsite
-# competitions to show results online). Does not influence the data for
-# admins or observers.
-LIVEDATA_CACHE_TIMEOUT = 30
-
 # Submissions by (snail) mail
 MAILSUBMIT_CONFIRMATION_HASH_LENGTH = 5
 
@@ -538,19 +502,6 @@ SIOWORKERS_LISTEN_PORT = 7890
 # When set to None the default url will be created using the pattern
 # http://$SIOWORKERS_LISTEN_ADDR:$SIOWORKERS_LISTEN_PORT
 SIOWORKERS_LISTEN_URL = None
-
-# Maintenance mode settings
-CONTEST_PREFIX_RE = '^(/c/[a-z0-9_-]+)?'
-MAINTENANCE_MODE_REDIRECT_URL = '/maintenance/'
-MAINTENANCE_MODE_IGNORE_URLS = [
-    CONTEST_PREFIX_RE + MAINTENANCE_MODE_REDIRECT_URL + '$',
-    CONTEST_PREFIX_RE + '/login/$',
-    CONTEST_PREFIX_RE + '/logout/$',
-]
-
-# Domain to use for serving IP to hostname mappings
-# using ./manage.py ipauth-dnsserver
-IPAUTH_DNSSERVER_DOMAIN = None
 
 # Judging priority and weight settings
 DEFAULT_CONTEST_PRIORITY = 10

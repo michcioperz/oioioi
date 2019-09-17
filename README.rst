@@ -105,12 +105,6 @@ See `UPGRADING`_ for instructions.
 
 .. _UPGRADING: UPGRADING.rst
 
-Backup
-------
-
-Amanda is recommended for doing OIOIOI backups. Sample configuration with README
-is available in ``extra/amanda`` directory.
-
 For developers
 --------------
 

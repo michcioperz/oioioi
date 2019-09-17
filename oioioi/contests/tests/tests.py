@@ -205,7 +205,7 @@ class TestUrls(TestCase):
             # global neutral patterns
             reverse('select_contest')
             # global noncontest pattern
-            reverse('move_node')
+            reverse('notifications_authenticate')
         except NoReverseMatch as e:
             self.fail(str(e))
 

@@ -8,7 +8,6 @@ import six
 from six.moves import range, zip
 
 from oioioi.contests.scores import IntegerScore
-from oioioi.pa.score import PAScore
 
 register = template.Library()
 
@@ -227,8 +226,6 @@ def result_color_class(raw_score):
 
     if isinstance(raw_score, IntegerScore):
         score_max_value = 100
-    elif isinstance(raw_score, PAScore):
-        score_max_value = 10
     else:
         # There should be a method to get maximum points for
         # contest, for now, support just above cases.

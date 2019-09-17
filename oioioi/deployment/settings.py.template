@@ -87,9 +87,6 @@ STATIC_ROOT = '__DIR__/static'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '__SECRET__'
 
-# Uncomment once oisubmit is used.
-#OISUBMIT_MAGICKEY = '__OTHER_SECRET__'
-
 # SMTP server parameters for sending emails.
 EMAIL_SUBJECT_PREFIX = '[OIOIOI] '
 EMAIL_USE_TLS = False
@@ -140,21 +137,6 @@ FILETRACKER_CACHE_ROOT = '__DIR__/cache'
 #FILETRACKER_CACHE_CLEANER_SCAN_INTERVAL = '1h'
 #FILETRACKER_CACHE_CLEANER_CLEAN_LEVEL = '50'
 #FILETRACKER_CACHE_SIZE = '8G'
-
-# The logs for one specific logger 'oioioi.zeus' will be
-# stored in a specific file: `PROJECT_DIR/logs/zeus.log`.
-LOGGING['handlers']['zeus_file'] = {
-    'level': 'INFO',
-    'class': 'logging.handlers.RotatingFileHandler',
-    'filename': '__DIR__/logs/zeus.log',
-    'maxBytes': 1024 * 1024 * 5, # 50 MB same as default in supervisord
-    'backupCount': 10, # same as in supervisord
-    'formatter': 'date_and_level',
-}
-LOGGING['loggers']['oioioi.zeus'] = {
-    'handlers': ['zeus_file'],
-    'level': 'DEBUG',
-}
 
 # On which interface should the sioworkers receiver listen. You should
 # set the address to 0.0.0.0 if you want remote workers to access
@@ -296,51 +278,26 @@ INSTALLED_APPS = (
 #    'oioioi.avatar',
 #    'oioioi.teachers',
 #    'oioioi.simpleui',
-#    'oioioi.ipdnsauth',
-#    'oioioi.ipauthsync',
 #    'oioioi.participants',
-#    'oioioi.oi',
 #    'oioioi.contestexcl',
-#    'oioioi.oisubmit',
-#    'oioioi.zeus',
 #    'oioioi.testrun',
 #    'oioioi.printing',
 #    'oioioi.scoresreveal',
-#    'oioioi.oireports',
-#    'oioioi.ontak',
-#    'oioioi.complaints',
-#    'oioioi.confirmations',
 #    'oioioi.acm',
 #    'oioioi.forum',
 #    'oioioi.disqualification',
-#    'oioioi.sharingcli',
 #    'oioioi.ctimes',
 #    'oioioi.suspendjudge',
 #    'oioioi.submitservice',
-#    'oioioi.timeline',
-#    'oioioi.amppz',
-#    'oioioi.balloons',
 #    'oioioi.statistics',
-#    'oioioi.publicsolutions',
 #    'oioioi.testspackages',
-#    'oioioi.pa',
 #    'oioioi.notifications',
-#    'oioioi.prizes',
 #    'oioioi.mailsubmit',
-#    'oioioi.portals',
 #    'oioioi.globalmessage',
-#    'oioioi.newsfeed',
 #    'oioioi.problemsharing',
 #    'oioioi.usergroups',
 #    'oioioi.usercontests',
 ) + INSTALLED_APPS
-
-# Additional Celery configuration necessary for 'prizes' app.
-if 'oioioi.prizes' in INSTALLED_APPS:
-    CELERY_IMPORTS.append('oioioi.prizes.models')
-    CELERY_ROUTES.update({
-        'oioioi.prizes.models.prizesmgr_job': dict(queue='prizesmgr'),
-    })
 
 # Set to True to show the link to the problemset with contests on navbar.
 PROBLEMSET_LINK_VISIBLE = True
@@ -362,20 +319,15 @@ TEMPLATES[0]['OPTIONS']['context_processors'] += [
 #    'oioioi.avatar.processors.gravatar',
 #    'oioioi.notifications.processors.notification_processor',
 #    'oioioi.globalmessage.processors.global_message_processor',
-#    'oioioi.portals.processors.portal_processor',
-#    'oioioi.portals.processors.portals_main_page_link_visible',
 ]
 
 MIDDLEWARE += (
-#    'oioioi.ipdnsauth.middleware.IpDnsAuthMiddleware',
 #    'oioioi.contestexcl.middleware.ExclusiveContestsMiddleware',
-#    'oioioi.ipdnsauth.middleware.ForceDnsIpAuthMiddleware',
 )
 
 AUTHENTICATION_BACKENDS += (
 #    'oioioi.teachers.auth.TeacherAuthBackend',
 #    'oioioi.usercontests.auth.UserContestAuthBackend',
-#    'oioioi.ipdnsauth.backends.IpDnsBackend',
 )
 
 # Number of concurrently evaluated submissions (default is 1).
@@ -383,27 +335,6 @@ AUTHENTICATION_BACKENDS += (
 
 # Number of concurrently processed problem packages (default is 1).
 #UNPACKMGR_CONCURRENCY = 1
-
-PROBLEM_SOURCES += (
-#    'oioioi.sharingcli.problem_sources.RemoteSource',
-#    'oioioi.zeus.problem_sources.ZeusProblemSource',
-)
-
-SHARING_SERVERS = (
-#    ('site_url', 'sharing_url', 'client_id', 'client_secret'),
-)
-
-ZEUS_INSTANCES = {
-#    'zeus_id': ('zeus_url', 'zeus_login', 'zeus_secret'),
-}
-
-# URL prefix (protocol, hostname and port)
-# hit by the Zeus callback after a submission is judged
-#ZEUS_PUSH_GRADE_CALLBACK_URL = 'https://sio2.dasie.mimuw.edu.pl'
-
-# Complaints
-#COMPLAINTS_EMAIL = 'email_to_send_complaints_to'
-#COMPLAINTS_SUBJECT_PREFIX = '[oioioi-complaints] '
 
 # Cache
 # To use the more efficient memcached, install it and uncomment the following:
@@ -436,10 +367,6 @@ ZEUS_INSTANCES = {
 
 # Port that the Notifications Server listens on
 #NOTIFICATIONS_SERVER_PORT = 7887
-
-# Domain to use for serving IP to hostname mappings
-# using ./manage.py ipauth-dnsserver
-#IPAUTH_DNSSERVER_DOMAIN = 'oioioi.example.com'
 
 # Error reporting
 import raven

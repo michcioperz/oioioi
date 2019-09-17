@@ -56,24 +56,6 @@ redirect_stderr=false
 stdout_logfile={{ PROJECT_DIR }}/logs/evalmgr.log
 stderr_logfile={{ PROJECT_DIR }}/logs/evalmgr-err.log
 
-[program:evalmgr-zeus]
-command={{ PYTHON }} {{ PROJECT_DIR }}/manage.py celeryd -E -l info -Q evalmgr-zeus -c 1
-startretries=0
-stopwaitsecs=15
-redirect_stderr=false
-stdout_logfile={{ PROJECT_DIR }}/logs/evalmgr-zeus.log
-stderr_logfile={{ PROJECT_DIR }}/logs/evalmgr-zeus-err.log
-{% if not settings.ZEUS_INSTANCES %}exclude=true{% endif %}
-
-[program:prizesmgr]
-command={{ PYTHON }} {{ PROJECT_DIR }}/manage.py celeryd -E -l info -Q prizesmgr -c 1
-startretries=0
-stopwaitsecs=15
-redirect_stderr=false
-stdout_logfile={{ PROJECT_DIR }}/logs/prizesmgr.log
-stderr_logfile={{ PROJECT_DIR }}/logs/prizesmgr-err.log
-{% if 'oioioi.prizes' not in settings.INSTALLED_APPS %}exclude=true{% endif %}
-
 [program:filetracker-server]
 command=filetracker-server -d {{ settings.MEDIA_ROOT }} -l {{ settings.FILETRACKER_LISTEN_ADDR }} -p {{ settings.FILETRACKER_LISTEN_PORT }} -D
 redirect_stderr=false
@@ -116,22 +98,6 @@ command={{ PROJECT_DIR }}/manage.py cleanupd
 redirect_stderr=false
 stdout_logfile={{ PROJECT_DIR }}/logs/cleanupd.log
 stderr_logfile={{ PROJECT_DIR }}/logs/cleanupd-err.log
-
-[program:ipauthsyncd]
-command={{ PYTHON }} {{ PROJECT_DIR }}/manage.py ipauthsyncd
-startretries=0
-redirect_stderr=false
-stdout_logfile={{ PROJECT_DIR }}/logs/ipauthsyncd.log
-stderr_logfile={{ PROJECT_DIR }}/logs/ipauthsyncd-err.log
-{% if not 'oioioi.ipauthsync' in settings.INSTALLED_APPS %}exclude=true{% endif %}
-
-[program:ipauth-dnsserver]
-command={{ PYTHON }} {{ PROJECT_DIR }}/manage.py ipauth-dnsserver
-startretries=0
-redirect_stderr=false
-stdout_logfile={{ PROJECT_DIR }}/logs/ipauth-dnsserver.log
-stderr_logfile={{ PROJECT_DIR }}/logs/ipauth-dnsserver-err.log
-{% if not settings.IPAUTH_DNSSERVER_DOMAIN %}exclude=true{% endif %}
 
 [program:oioioiworker]
 command=twistd -n -l- --pidfile={{ PROJECT_DIR }}/pidfiles/oioioiworker.pid worker -c 2 localhost

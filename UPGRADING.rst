@@ -12,16 +12,6 @@ Then run::
 
 and restart the judging machines.
 
-Upgrading from django 1.8
--------------------------
-Please make sure to reinstall all packages to avoid compatibility issues::
-
-  pip install -e git://github.com/sio2project/oioioi.git#egg=oioioi
-  pip install -I --force-reinstall -r requirements.txt
-  ./manage.py migrate
-  ./manage.py collectstatic
-  ./manage.py supervisor restart all
-
 Changes in the deployment directory
 -----------------------------------
 

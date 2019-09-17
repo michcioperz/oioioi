@@ -15,7 +15,6 @@ from oioioi.base.tests import (TestCase, check_not_accessible, fake_time,
 from oioioi.contests.models import (Contest, ProblemInstance,
                                     UserResultForProblem)
 from oioioi.contests.scores import IntegerScore
-from oioioi.pa.score import PAScore
 from oioioi.programs.controllers import ProgrammingContestController
 from oioioi.rankings.controllers import DefaultRankingController
 from oioioi.rankings.models import (Ranking, RankingPage, RankingRecalc,
@@ -470,9 +469,6 @@ class TestResultColorClassFilter(TestCase):
     def test_integer_scores(self):
         self._test_scores(10, IntegerScore)
 
-    def test_pa_scores(self):
-        self._test_scores(1, self.pa_score_factory)
-
     def _test_scores(self, score_multiply, score_class_factory):
         values = [0, 1, 2, 3, 5, 8, 10]
         results = ['WA', 'OK0', 'OK0', 'OK25', 'OK50', 'OK75', 'OK100']
@@ -481,10 +477,6 @@ class TestResultColorClassFilter(TestCase):
             self.check_score_color(value * score_multiply,
                                    'submission--' + result,
                                    score_class_factory)
-
-    @staticmethod
-    def pa_score_factory(int_score):
-        return PAScore(IntegerScore(int_score))
 
     def test_empty_scores(self):
         self.assertEqual(result_color_class(''), '')

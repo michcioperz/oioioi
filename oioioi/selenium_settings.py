@@ -20,49 +20,28 @@ DATABASES = {
 INSTALLED_APPS = (
     'oioioi.contestlogo',
     'oioioi.teachers',
-    'oioioi.ipdnsauth',
     'oioioi.participants',
-    'oioioi.oi',
-    'oioioi.printing',
-    'oioioi.zeus',
     'oioioi.testrun',
     'oioioi.scoresreveal',
-    'oioioi.oireports',
-    'oioioi.oisubmit',
-    'oioioi.complaints',
     'oioioi.contestexcl',
     'oioioi.forum',
-    'oioioi.exportszu',
-    'oioioi.similarsubmits',
     'oioioi.disqualification',
-    'oioioi.confirmations',
     'oioioi.ctimes',
     'oioioi.acm',
     'oioioi.suspendjudge',
     'oioioi.submitservice',
-    'oioioi.timeline',
     'oioioi.statistics',
-    'oioioi.amppz',
-    'oioioi.balloons',
-    'oioioi.publicsolutions',
     'oioioi.testspackages',
-    'oioioi.teams',
-    'oioioi.pa',
     'oioioi.notifications',
-    'oioioi.prizes',
     'oioioi.mailsubmit',
     'oioioi.globalmessage',
-    'oioioi.portals',
-    'oioioi.newsfeed',
     'oioioi.simpleui',
-    'oioioi.livedata',
 ) + INSTALLED_APPS
 
 TEMPLATES[0]['OPTIONS']['context_processors'] += [
     'oioioi.contestlogo.processors.logo_processor',
     'oioioi.contestlogo.processors.icon_processor',
     'oioioi.globalmessage.processors.global_message_processor',
-    'oioioi.portals.processors.portal_processor',
 ]
 
 AUTHENTICATION_BACKENDS += (
@@ -78,7 +57,6 @@ TESTS = True
 MOCK_RANKINGSD = True
 
 SECRET_KEY = 'no_secret'
-OISUBMIT_MAGICKEY = 'abcdef'
 USE_UNSAFE_EXEC = True
 USE_LOCAL_COMPILERS = True
 USE_UNSAFE_CHECKER = True
@@ -86,21 +64,7 @@ USE_UNSAFE_CHECKER = True
 USE_SINOLPACK_MAKEFILES = True
 
 
-COMPLAINTS_EMAIL = 'dummy@example.com'
-COMPLAINTS_SUBJECT_PREFIX = '[oioioi-complaints] '
-
 WARN_ABOUT_REPEATED_SUBMISSION = False
-
-BALLOON_ACCESS_COOKIE_EXPIRES_DAYS = 7
-
-PROBLEM_SOURCES += (
-    'oioioi.zeus.problem_sources.ZeusProblemSource',
-)
-
-ZEUS_INSTANCES = {
-    'dummy': ('__use_object__',
-              'oioioi.zeus.tests.ZeusDummyServer', ('', '', '')),
-}
 
 CACHES = {
     'default': {

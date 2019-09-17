@@ -46,7 +46,6 @@ from oioioi.base.utils import (RegisteredSubclassesBase, archive,
                                split_extension, strip_num_or_hash)
 from oioioi.base.utils.execute import ExecuteError, execute
 from oioioi.contests.utils import is_contest_admin
-from oioioi.szkopul.views import main_page_view as szkopul_main_page
 
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
@@ -140,7 +139,6 @@ class TestIndexNoContest(TestCase):
 
     @override_settings(DEFAULT_GLOBAL_PORTAL_AS_MAIN_PAGE=False)
     def test_no_contest(self):
-        unregister_main_page_view(szkopul_main_page)
         with self.assertNumQueriesLessThan(50):
             response = self.client.get('/')
             self.assertContains(response, 'There are no contests available to logged out')
@@ -148,10 +146,6 @@ class TestIndexNoContest(TestCase):
             self.assertTrue(self.client.login(username='test_admin'))
             response = self.client.get('/')
             self.assertContains(response, 'This is a new OIOIOI installation')
-
-        @register_main_page_view(order=100)
-        def set_main_page_back(request):
-            return szkopul_main_page(request)
 
     @override_settings(DEFAULT_GLOBAL_PORTAL_AS_MAIN_PAGE=False)
     def test_navbar_login(self):
