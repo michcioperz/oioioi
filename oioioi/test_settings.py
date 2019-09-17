@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'oioioi.usergroups',
     'oioioi.problemsharing',
     'oioioi.usercontests',
+    'oioioi.pooledquizzes',
 ) + INSTALLED_APPS
 
 TEMPLATES[0]['OPTIONS']['context_processors'] += [
@@ -107,6 +108,7 @@ BALLOON_ACCESS_COOKIE_EXPIRES_DAYS = 7
 
 PROBLEM_SOURCES += (
     'oioioi.zeus.problem_sources.ZeusProblemSource',
+    'oioioi.pooledquizzes.problem_sources.EmptyPooledQuizSource',
 )
 
 ZEUS_INSTANCES = {
