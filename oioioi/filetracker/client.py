@@ -6,6 +6,7 @@ from django.test.signals import setting_changed
 from django.utils.module_loading import import_string
 
 from filetracker.client import Client as FiletrackerClient
+from filetracker.client.s3_data_store import S3DataStore
 
 from oioioi.base.utils import memoized, reset_memoized
 
@@ -53,4 +54,12 @@ def remote_storage_factory():
        ``settings.FILETRACKER_CACHE_ROOT`` as a cache directory.
     """
     return FiletrackerClient(remote_url=settings.FILETRACKER_URL,
+            cache_dir=settings.FILETRACKER_CACHE_ROOT)
+
+def s3_storage_factory():
+    """A filetracker factory which creates a client that uses the
+       remote server at ``settings.FILETRACKER_URL`` and a folder
+       ``settings.FILETRACKER_CACHE_ROOT`` as a cache directory.
+    """
+    return FiletrackerClient(remote_store=S3DataStore(settings.FILETRACKER_URL),
             cache_dir=settings.FILETRACKER_CACHE_ROOT)
